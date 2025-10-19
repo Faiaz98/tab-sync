@@ -1,0 +1,41 @@
+body {
+  font-family: sans-serif;
+  padding: 2rem;
+  background: #f0f0f0;
+}
+
+.app {
+  max-width: 500px;
+  margin: auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.tab-item {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.tab-item a {
+  text-decoration: none;
+  color: #0070f3;
+}
+
+button {
+  background: #0070f3;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input {
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
