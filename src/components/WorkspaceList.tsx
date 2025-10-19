@@ -1,32 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useWorkspaces } from "../airstate/air";
 
-const WorkspaceList = () => {
-  const { workspaces, activeWorkspaceId, setActiveWorkspaceId, createWorkspace } = useWorkspaces();
+const WorkspaceList: React.FC = () => {
+  const {
+    workspaces,
+    activeWorkspaceId,
+    setActiveWorkspaceId,
+    createWorkspace,
+  } = useWorkspaces();
+
   const [name, setName] = useState("");
 
+  const handleCreate = () => {
+    if (!name.trim()) return;
+    createWorkspace(name.trim()); // activeWorkspaceId is already set inside
+    setName("");
+  };
+
+  // Auto-select first workspace if none is active
+  useEffect(() => {
+    if (!activeWorkspaceId && workspaces.length > 0) {
+      setActiveWorkspaceId(workspaces[0].id);
+    }
+  }, [workspaces, activeWorkspaceId, setActiveWorkspaceId]);
+
   return (
-    <div>
-      <h2>Workspaces</h2>
-      <ul>
+    <div className="workspace-list p-2 border mb-4">
+      <h2 className="text-lg font-semibold mb-2">Workspaces</h2>
+
+      <div className="flex flex-wrap gap-2 mb-2">
         {workspaces.map(ws => (
-          <li
+          <button
             key={ws.id}
-            style={{ fontWeight: ws.id === activeWorkspaceId ? "bold" : "normal", cursor: "pointer" }}
             onClick={() => setActiveWorkspaceId(ws.id)}
+            className={`px-3 py-1 rounded ${
+              ws.id === activeWorkspaceId ? "bg-blue-500 text-white font-bold" : "bg-gray-200"
+            }`}
           >
-            {ws.name}
-          </li>
+            {ws.name} ({ws.tabs.length}) {/* Show tab count */}
+          </button>
         ))}
-      </ul>
-      <input
-        placeholder="New workspace"
-        value={name}
-        onChange={e => setName(e.target.value)}
-      />
-      <button onClick={() => { if (name) { createWorkspace(name); setName(""); }}}>
-        Add Workspace
-      </button>
+      </div>
+
+      <div className="flex gap-2">
+        <input
+          placeholder="New workspace"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          className="border px-2 py-1 rounded flex-1"
+        />
+        <button
+          onClick={handleCreate}
+          className="bg-green-500 text-white px-3 py-1 rounded"
+        >
+          Add
+        </button>
+      </div>
     </div>
   );
 };

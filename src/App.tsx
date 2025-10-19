@@ -4,8 +4,8 @@ import TabList from "./components/TabList";
 
 const App: React.FC = () => {
   return (
-    <div>
-      <h1>TabSync 🌐</h1>
+    <div className="app p-4 max-w-xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">TabSync 🌐</h1>
       <WorkspaceList />
       <TabList />
     </div>
